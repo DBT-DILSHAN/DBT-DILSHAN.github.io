@@ -307,8 +307,168 @@
   .liquid-blobs .blob{ animation: none; }
 }
 @media (max-width: 768px){
-  .liquid-blobs .blob{ filter: blur(50px); }
+  .liquid-blobs .blob{ filter: blur(30px); }
   .blob-3{ display: none; }
+  .blob-2{ display: none; }
+}
+@media (max-width: 768px){
+  :root{ --glass-blur: blur(10px) saturate(140%); }
+}
+
+/* =========================================================
+   GRADIENT MESH BACKGROUND
+========================================================= */
+.gradient-mesh{
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(16,185,129,0.14), transparent 42%),
+    radial-gradient(circle at 85% 25%, rgba(52,211,153,0.11), transparent 46%),
+    radial-gradient(circle at 50% 85%, rgba(110,231,183,0.09), transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(5,150,105,0.11), transparent 42%);
+  background-size: 200% 200%;
+  animation: meshFlow 24s ease-in-out infinite;
+  filter: blur(6px);
+  opacity: .8;
+}
+[data-theme="light"] .gradient-mesh{ opacity: .45; }
+@keyframes meshFlow{
+  0%, 100%{ background-position: 0% 0%, 100% 0%, 50% 100%, 100% 100%; }
+  50%{ background-position: 100% 100%, 0% 100%, 50% 0%, 0% 0%; }
+}
+@media (prefers-reduced-motion: reduce){ .gradient-mesh{ animation: none; } }
+@media (max-width: 768px){
+  .gradient-mesh{ filter: none; animation: none; background-position: 0% 0%, 100% 0%, 50% 100%, 100% 100%; opacity: .35; }
+}
+
+/* =========================================================
+   GLOWING CIRCUIT LINES OVERLAY
+========================================================= */
+.circuit-glow-lines{
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
+}
+.circuit-glow-lines path{
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 6 16;
+  filter: drop-shadow(0 0 6px var(--gold)) drop-shadow(0 0 2px var(--gold-light));
+  opacity: .3;
+  animation: circuitFlow 7s linear infinite;
+}
+.circuit-glow-lines path:nth-child(2){ animation-duration: 9s; animation-delay: -2s; opacity: .22; }
+.circuit-glow-lines path:nth-child(3){ animation-duration: 5.5s; animation-delay: -1s; opacity: .28; }
+.circuit-glow-lines path:nth-child(4){ animation-duration: 10s; animation-delay: -4s; opacity: .18; }
+.circuit-glow-lines circle{
+  fill: var(--gold-light);
+  filter: drop-shadow(0 0 5px var(--gold));
+  opacity: .5;
+}
+@keyframes circuitFlow{ to{ stroke-dashoffset: -440; } }
+[data-theme="light"] .circuit-glow-lines{ opacity: .35; }
+@media (prefers-reduced-motion: reduce){ .circuit-glow-lines path{ animation: none; } }
+@media (max-width: 768px){
+  .circuit-glow-lines{ opacity: .18; }
+  .circuit-glow-lines path{ animation: none; filter: none; stroke-dasharray: none; }
+  .circuit-glow-lines circle{ display: none; }
+}
+
+/* =========================================================
+   NVQ PROGRESS BAR
+========================================================= */
+.nvq-progress-wrap{ margin-top: 14px; }
+.nvq-progress-bar{
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+[data-theme="light"] .nvq-progress-bar{ background: rgba(0,0,0,0.08); }
+.nvq-progress-fill{
+  height: 100%;
+  width: 0%;
+  background: var(--gold-gradient);
+  border-radius: 99px;
+  transition: width 1.2s var(--ease);
+}
+.nvq-progress-label{
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-faint);
+  letter-spacing: 0.03em;
+}
+
+/* =========================================================
+   FLOATING WHATSAPP BUTTON
+========================================================= */
+.whatsapp-float{
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  z-index: 700;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+  animation: waPulse 2.6s ease-in-out infinite;
+  transition: transform 0.25s ease;
+}
+.whatsapp-float:hover{ transform: scale(1.08); }
+@keyframes waPulse{
+  0%, 100%{ box-shadow: 0 6px 24px rgba(37,211,102,0.45); }
+  50%{ box-shadow: 0 6px 24px rgba(37,211,102,0.45), 0 0 0 10px rgba(37,211,102,0.12); }
+}
+@media (prefers-reduced-motion: reduce){ .whatsapp-float{ animation: none; } }
+@media (max-width: 768px){
+  .whatsapp-float{ width: 50px; height: 50px; font-size: 1.4rem; bottom: 16px; right: 16px; animation: none; }
+}
+
+/* =========================================================
+   STAR RATING BAR
+========================================================= */
+.star-rating-bar{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+}
+.star-rating-icon{
+  font-size: 1.4rem;
+  color: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: color .2s ease, transform .2s var(--ease);
+}
+[data-theme="light"] .star-rating-icon{ color: rgba(0,0,0,0.15); }
+.star-rating-icon:hover{ transform: scale(1.15); }
+.star-rating-icon.active{
+  color: var(--gold);
+  filter: drop-shadow(0 0 6px var(--gold-glow));
+}
+.star-rating-label{
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: .68rem;
+  color: var(--text-faint);
+  letter-spacing: .03em;
+}
+@media (max-width: 480px){
+  .star-rating-icon{ font-size: 1.2rem; }
+  .star-rating-label{ font-size: .6rem; margin-left: 0; width: 100%; }
 }
 
 /* =========================================================
@@ -355,20 +515,40 @@ input, textarea, select{ font-family:inherit; }
   background-size: 42px 42px;
   mask-image: radial-gradient(circle at center, black, transparent 75%);
 }
-.loader-core{ position:relative; width:110px; height:110px; display:flex; align-items:center; justify-content:center; }
-.loader-ring{ width:110px; height:110px; transform:rotate(-90deg); }
-.loader-ring circle{
-  fill:none; stroke: var(--gold); stroke-width:3; stroke-linecap:round;
-  stroke-dasharray: 264; stroke-dashoffset: 264;
-  filter: drop-shadow(0 0 12px var(--gold-glow));
-  animation: loaderSpin 1.6s var(--ease) infinite;
+.loader-core{ position:relative; width:120px; height:120px; display:flex; align-items:center; justify-content:center; }
+.bolt-icon-bg, .bolt-icon-fill{ position:absolute; inset:0; width:100%; height:100%; }
+.bolt-icon-bg path{ fill: rgba(255,255,255,0.08); }
+[data-theme="light"] .bolt-icon-bg path{ fill: rgba(0,0,0,0.08); }
+.bolt-icon-fill{ clip-path: inset(100% 0 0 0); transition: clip-path 0.15s linear; }
+.bolt-icon-fill path{
+  fill: var(--gold);
+  filter: drop-shadow(0 0 10px var(--gold)) drop-shadow(0 0 22px var(--gold-glow));
 }
-@keyframes loaderSpin{
-  0%{ stroke-dashoffset:264; transform-origin:center; }
-  50%{ stroke-dashoffset:40; }
-  100%{ stroke-dashoffset:264; }
+.bolt-sparks{ position:absolute; inset:0; pointer-events:none; }
+.bolt-spark{
+  position:absolute; top:50%; left:50%; width:4px; height:4px; border-radius:50%;
+  background: var(--gold-light);
+  box-shadow: 0 0 6px var(--gold-light);
+  opacity:0;
+  animation: sparkFly 0.6s ease-out forwards;
 }
-.loader-percent{ font-family: var(--font-mono); font-size:1.1rem; color: var(--gold); position:absolute; }
+@keyframes sparkFly{
+  0%{ opacity:1; transform: translate(-50%,-50%) translate(0,0) scale(1); }
+  100%{ opacity:0; transform: translate(-50%,-50%) translate(var(--sx), var(--sy)) scale(0.3); }
+}
+.bolt-flash{
+  position:absolute; inset:-24px; border-radius:50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9), var(--gold) 40%, transparent 70%);
+  opacity:0; transform:scale(0.5);
+  pointer-events:none;
+}
+.bolt-flash.active{ animation: boltFlashPop 0.5s ease-out forwards; }
+@keyframes boltFlashPop{
+  0%{ opacity:0; transform:scale(0.5); }
+  40%{ opacity:.9; transform:scale(1.5); }
+  100%{ opacity:0; transform:scale(2.1); }
+}
+.loader-percent{ font-family: var(--font-mono); font-size:1.1rem; color: var(--gold); position:absolute; bottom:-34px; }
 .loader-label{ font-family: var(--font-mono); letter-spacing:.3em; font-size:.7rem; color: var(--text-dim); }
 .loader-bar-wrap{
   width: 200px;
@@ -391,6 +571,11 @@ input, textarea, select{ font-family:inherit; }
 [data-theme="light"] .loader-bar-wrap {
   background: rgba(0,0,0,0.06);
 }
+@media (prefers-reduced-motion: reduce){
+  .bolt-spark{ display:none; }
+  .bolt-flash.active{ animation: none; opacity: 0; }
+}
+
 
 /* =========================================================
    SCROLL PROGRESS
@@ -472,12 +657,12 @@ input, textarea, select{ font-family:inherit; }
 .nav-cta{ 
   font-size:.7rem; 
   padding:8px 16px; 
-  background: var(--gold-gradient);
+  background: linear-gradient(135deg, rgba(16,185,129,0.85), rgba(52,211,153,0.85));
   color: #0a0a0a !important;
   font-weight: 600;
   border-radius: 999px;
   transition: all .3s;
-  box-shadow: 0 4px 20px rgba(252,163,17,0.20);
+  box-shadow: 0 4px 20px rgba(16,185,129,0.25);
 }
 [data-theme="light"] .nav-cta {
   color: #0a0a0a !important;
@@ -638,37 +823,66 @@ input, textarea, select{ font-family:inherit; }
   display:inline-flex; align-items:center; gap:10px; justify-content:center;
   font-family: var(--font-body); font-size:.9rem; font-weight: 600; letter-spacing:.01em;
   padding: 14px 28px; border-radius: 999px; position:relative; overflow:hidden;
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .35s, color .35s;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .35s, color .35s, border-color .35s;
   white-space:nowrap;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.22),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    0 6px 20px rgba(0,0,0,0.18);
 }
-.btn-primary{ 
-  background: var(--gold-gradient); 
-  color:#0a0a0a; 
-  font-weight:700; 
-  box-shadow: 0 8px 32px -6px rgba(16, 185, 129, .35);
+[data-theme="light"] .btn{
+  border-color: rgba(255,255,255,0.5);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.55),
+    inset 0 -1px 0 rgba(0,0,0,0.04),
+    0 6px 20px rgba(0,0,0,0.06);
+}
+.btn::before{
+  content:'';
+  position:absolute; top:0; left:8%; right:8%; height:1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  opacity:.6; pointer-events:none;
+}
+.btn-primary{
+  background: linear-gradient(135deg, rgba(16,185,129,0.85) 0%, rgba(52,211,153,0.85) 50%, rgba(110,231,183,0.85) 100%);
+  color:#0a0a0a;
+  font-weight:700;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    0 8px 32px -6px rgba(16, 185, 129, .45);
 }
 [data-theme="light"] .btn-primary {
   color: #0a0a0a;
 }
 .btn-primary:hover{ 
   transform: translateY(-4px); 
-  box-shadow: 0 14px 44px -6px rgba(16, 185, 129, .45); 
+  box-shadow:
+    inset 0 1.5px 0 rgba(255,255,255,0.4),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    0 14px 44px -6px rgba(16, 185, 129, .55); 
 }
 .btn-outline{ 
   border:1px solid var(--glass-border); 
   color: var(--text); 
   background: var(--glass);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
 }
 .btn-outline:hover{ 
   border-color: var(--gold); 
   color: var(--gold); 
   transform: translateY(-3px); 
-  background: rgba(252,163,17,.04);
+  background: rgba(16,185,129,.08);
 }
-.btn-ghost{ color: var(--gold); }
-.btn-ghost:hover{ color: var(--gold-dark); transform: translateX(4px); }
+.btn-ghost{
+  color: var(--gold);
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.08);
+}
+[data-theme="light"] .btn-ghost{ background: rgba(255,255,255,0.25); }
+.btn-ghost:hover{ color: var(--gold-dark); transform: translateX(4px); background: rgba(16,185,129,.06); }
 .btn .ripple{ position:absolute; border-radius:50%; background: rgba(255,255,255,.4); transform:scale(0); animation: rippleAnim .6s ease-out; pointer-events:none; }
 @keyframes rippleAnim{ to{ transform:scale(3); opacity:0; } }
 
@@ -707,6 +921,9 @@ input, textarea, select{ font-family:inherit; }
 }
 .smoke-1{ animation: driftSmoke 34s linear infinite; }
 .smoke-2{ animation: driftSmoke 46s linear infinite reverse; opacity:.6; }
+@media (max-width: 768px){
+  .smoke-layer{ filter: blur(20px); animation: none !important; }
+}
 @keyframes driftSmoke{
   0%{ transform: translate(0,0) rotate(0deg); }
   50%{ transform: translate(3%, 2%) rotate(6deg); }
@@ -714,6 +931,9 @@ input, textarea, select{ font-family:inherit; }
 }
 .spark-svg{ position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; }
 .spark-svg path{ stroke: var(--gold-light); stroke-width:1.4; fill:none; opacity:0; filter: drop-shadow(0 0 4px var(--gold-light)); }
+@media (max-width: 768px){
+  .spark-svg path{ filter: none; }
+}
 
 .hero-inner{
   position:relative; z-index:2; display:grid; grid-template-columns: 1fr; gap:60px; align-items:center;
@@ -1609,6 +1829,25 @@ input, textarea, select{ font-family:inherit; }
   .cert-gallery{ grid-template-columns: repeat(3, 1fr); }
 }
 
+/* Compact nav for laptop widths so 10 nav links don't crowd the bar */
+@media (max-width: 1200px) and (min-width: 769px) {
+  .nav-link{ padding: 8px 8px; font-size: .68rem; }
+  .nav-link::before{ display:none; }
+  .nav-logo{ font-size: 1.35rem; }
+  .nav-cta{ padding: 7px 12px; font-size: .65rem; }
+}
+@media (max-width: 980px) and (min-width: 769px) {
+  .nav-link{ padding: 6px 6px; font-size: .62rem; }
+  .navbar{ padding: 14px 3%; }
+}
+
+/* Large / ultra-wide desktop refinements */
+@media (min-width: 1600px) {
+  .hero-inner{ max-width: 1100px; }
+  .about-grid, .skills-grid, .services-grid, .projects-grid, .cert-gallery, .contact-grid{ max-width: 1360px; }
+  .section{ padding: 120px 6%; }
+}
+
 /* Reduce blur/GPU load on touch devices for smoother scrolling */
 @media (hover: none) and (pointer: coarse) {
   :root, [data-theme="light"] { --glass-blur: blur(16px) saturate(160%); }
@@ -1761,18 +2000,33 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   }
 }
 </script>
+<!-- ============================================================
+  GOOGLE ANALYTICS (disabled by default)
+  Get a free GA4 Measurement ID from analytics.google.com,
+  replace G-XXXXXXXXXX below in BOTH lines, then remove the
+  surrounding <!-- and --> to activate. Leaving it commented
+  out keeps the site from loading an extra script for nothing.
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
 </head>
 <body>
 <!-- ================= LOADER ================= -->
 <div id="loader">
   <div class="loader-grid"></div>
   <div class="loader-core">
-    <svg viewBox="0 0 100 100" class="loader-ring">
-      <circle cx="50" cy="50" r="42"></circle>
-    </svg>
-    <span class="loader-percent">0%</span>
+    <svg viewBox="0 0 100 100" class="bolt-icon-bg" aria-hidden="true"><path d="M55 2 L18 55 H42 L38 98 L82 42 H56 Z"></path></svg>
+    <svg viewBox="0 0 100 100" class="bolt-icon-fill" id="boltFill" aria-hidden="true"><path d="M55 2 L18 55 H42 L38 98 L82 42 H56 Z"></path></svg>
+    <div class="bolt-sparks" id="boltSparks"></div>
+    <div class="bolt-flash" id="boltFlash"></div>
+    <span class="loader-percent" id="loaderPercent">0%</span>
   </div>
-  <div class="loader-label">POWERING UP</div>
   <div class="loader-bar-wrap">
     <div class="loader-bar-fill" id="loaderBar"></div>
   </div>
@@ -1780,6 +2034,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 <!-- ================= SCROLL PROGRESS ================= -->
 <div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ================= GRADIENT MESH BACKGROUND ================= -->
+<div class="gradient-mesh" aria-hidden="true"></div>
+
+<!-- ================= GLOWING CIRCUIT LINES ================= -->
+<svg class="circuit-glow-lines" aria-hidden="true" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+  <path d="M0,150 L300,150 L300,400 L700,400 L700,700 L1000,700"></path>
+  <path d="M1000,100 L750,100 L750,300 L400,300 L400,600 L0,600"></path>
+  <path d="M100,1000 L100,750 L500,750 L500,450 L850,450 L850,50"></path>
+  <path d="M950,950 L600,950 L600,650 L250,650 L250,200 L950,200"></path>
+  <circle cx="300" cy="150" r="4"></circle>
+  <circle cx="700" cy="400" r="4"></circle>
+  <circle cx="750" cy="300" r="4"></circle>
+  <circle cx="400" cy="600" r="4"></circle>
+</svg>
 
 <!-- ================= LIQUID GLASS AMBIENT BLOBS ================= -->
 <div class="liquid-blobs" aria-hidden="true">
@@ -1798,9 +2067,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     <a href="#skills" class="nav-link" data-index="02">Skills</a>
     <a href="#services" class="nav-link" data-index="03">Services</a>
     <a href="#projects" class="nav-link" data-index="04">Projects</a>
-    <a href="#experience" class="nav-link" data-index="05">Experience</a>
-    <a href="#certificates" class="nav-link" data-index="06">Certificates</a>
-    <a href="#contact" class="nav-link" data-index="07">Contact</a>
+    <a href="#notes" class="nav-link" data-index="05">Notes</a>
+    <a href="#testimonials" class="nav-link" data-index="06">Testimonials</a>
+    <a href="#experience" class="nav-link" data-index="07">Experience</a>
+    <a href="#certificates" class="nav-link" data-index="08">Certificates</a>
+    <a href="#contact" class="nav-link" data-index="09">Contact</a>
   </nav>
   <div class="nav-actions">
     <!-- Theme Toggle - Liquid Glass Switch -->
@@ -1951,10 +2222,70 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   </div>
 </div>
 
+<!-- ================= NOTES / TIPS ================= -->
+<section id="notes" class="section section-alt">
+  <div class="section-head" data-aos="fade-up">
+    <span class="section-eyebrow">05 &mdash; NOTES</span>
+    <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Field <span class="grad-text">Notes</span></h2>
+  </div>
+  <div class="about-cols" style="max-width:1100px;margin:0 auto;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+    <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="100">
+      <h4><i class="fa-solid fa-bolt"></i> VFD Fault-Finding</h4>
+      <p>Most Altivar drive trips trace back to three things: an overheating motor, a loose power terminal, or a wrong parameter setting. Check these before assuming the drive itself is faulty.</p>
+    </div>
+    <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="200">
+      <h4><i class="fa-solid fa-shield-halved"></i> Panel Safety Habit</h4>
+      <p>Always test your tester before and after checking for dead. A meter that reads zero on a dead circuit only means something if you know it works on a live one too.</p>
+    </div>
+    <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="300">
+      <h4><i class="fa-solid fa-gears"></i> Motor Control Tip</h4>
+      <p>Contactor chatter is usually a coil voltage problem, not a mechanical one. Check supply voltage stability at the coil before replacing the contactor.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section id="testimonials" class="section">
+  <div class="section-head" data-aos="fade-up">
+    <span class="section-eyebrow">06 &mdash; TESTIMONIALS</span>
+    <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">What People <span class="grad-text">Say</span></h2>
+  </div>
+  <div class="about-cols" style="max-width:1000px;margin:0 auto;">
+    <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="100">
+      <h4><i class="fa-solid fa-quote-left"></i> Add a Supervisor Quote</h4>
+      <p>Placeholder &mdash; replace with real feedback from a supervisor or senior technician at PGP Glass Ceylon.</p>
+    </div>
+    <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="200">
+      <h4><i class="fa-solid fa-quote-left"></i> Add a Colleague Quote</h4>
+      <p>Placeholder &mdash; replace with real feedback from a colleague or instructor at IETI Moratuwa.</p>
+    </div>
+  </div>
+
+  <form class="contact-form feedback-form" id="feedbackForm" style="max-width:600px;margin:36px auto 0;" data-aos="fade-up" data-aos-delay="300" novalidate>
+    <h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:16px;text-align:center;">Leave Your Feedback</h3>
+    <div class="form-group"><label for="fbName">Name</label><input type="text" id="fbName" name="name" required><span class="form-error" id="err-fbname"></span></div>
+    <div class="form-group">
+      <label>Rating</label>
+      <div class="star-rating-bar" id="starRatingBar" role="radiogroup" aria-label="Rating">
+        <i class="fa-solid fa-star star-rating-icon" data-value="1" role="radio" aria-label="1 star" tabindex="0"></i>
+        <i class="fa-solid fa-star star-rating-icon" data-value="2" role="radio" aria-label="2 stars" tabindex="0"></i>
+        <i class="fa-solid fa-star star-rating-icon" data-value="3" role="radio" aria-label="3 stars" tabindex="0"></i>
+        <i class="fa-solid fa-star star-rating-icon" data-value="4" role="radio" aria-label="4 stars" tabindex="0"></i>
+        <i class="fa-solid fa-star star-rating-icon" data-value="5" role="radio" aria-label="5 stars" tabindex="0"></i>
+        <span class="star-rating-label" id="starRatingLabel">Tap to rate</span>
+      </div>
+      <input type="hidden" id="fbRating" name="rating" value="5">
+    </div>
+    <div class="form-group"><label for="fbMessage">Your Feedback</label><textarea id="fbMessage" name="message" rows="4" required></textarea><span class="form-error" id="err-fbmessage"></span></div>
+    <button type="submit" class="btn btn-primary form-submit" id="fbSubmitBtn"><span class="btn-label">Submit Feedback</span><span class="btn-loader"></span></button>
+    <div class="form-status" id="fbFormStatus"></div>
+  </form>
+</section>
+
 <!-- ================= EXPERIENCE ================= -->
 <section id="experience" class="section">
   <div class="section-head" data-aos="fade-up">
-    <span class="section-eyebrow">05 &mdash; EXPERIENCE</span>
+    <span class="section-eyebrow">07 &mdash; EXPERIENCE</span>
     <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Career <span class="grad-text">Timeline</span></h2>
   </div>
   <div class="timeline" id="timeline">
@@ -1966,6 +2297,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <h3>NVQ Level 4, Power Electrical (Special)</h3>
         <p class="timeline-org">Studied at Industry Engineering Training Institute (IETI), Moratuwa</p>
         <p>Formal technical training covering power electrical systems and safety standards.</p>
+        <div class="nvq-progress-wrap" aria-hidden="true">
+          <div class="nvq-progress-bar"><div class="nvq-progress-fill" id="nvqProgressFill"></div></div>
+          <span class="nvq-progress-label" id="nvqProgressLabel">In progress</span>
+        </div>
       </div>
     </div>
     <div class="timeline-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
@@ -1977,35 +2312,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <p>Hands-on industrial training with panel boards, motor control and VFD systems.</p>
       </div>
     </div>
-    <div class="timeline-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card glass-card" data-icon="fa-bolt">
-        <span class="timeline-date">Milestone</span>
-        <h3>VFD Retrofit &amp; Fault-Finding Practice</h3>
-        <p class="timeline-org">On-the-job</p>
-        <p>Schneider Altivar-series drive wiring, parameterization and troubleshooting.</p>
-      </div>
-    </div>
-    <div class="timeline-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
-      <div class="timeline-dot"></div>
-      <div class="timeline-card glass-card" data-icon="fa-robot">
-        <span class="timeline-date">Goal</span>
-        <h3>Industrial Automation</h3>
-        <p class="timeline-org">Career Direction</p>
-        <p>Progressing toward PLC-driven control systems and full automation.</p>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- ================= CERTIFICATES ================= -->
 <section id="certificates" class="section section-alt">
   <div class="section-head" data-aos="fade-up">
-    <span class="section-eyebrow">06 &mdash; CERTIFICATES</span>
+    <span class="section-eyebrow">08 &mdash; CERTIFICATES</span>
     <h2 class="section-title" data-aos="fade-up" data-aos-delay="100"><span class="grad-text">Credentials</span></h2>
   </div>
   <div class="cert-gallery" id="certGallery" data-aos="fade-up" data-aos-delay="200"></div>
 </section>
+
+<!-- ================= FLOATING WHATSAPP ================= -->
+<a href="https://wa.me/94712308533?text=Hi%20Tharindu%2C%20I%20have%20an%20electrical%20project%20to%20discuss" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
 <!-- Lightbox -->
 <div class="lightbox-overlay" id="lightbox">
@@ -2016,7 +2336,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 <!-- ================= CONTACT ================= -->
 <section id="contact" class="section">
   <div class="section-head" data-aos="fade-up">
-    <span class="section-eyebrow">07 &mdash; CONTACT</span>
+    <span class="section-eyebrow">09 &mdash; CONTACT</span>
     <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">Let's <span class="grad-text">Connect</span></h2>
   </div>
   <div class="contact-grid">
@@ -2092,6 +2412,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   </div>
   <div class="footer-bottom">
     <span>&copy; <span id="year"></span> Tharindu Dilshan</span>
+    <span class="visitor-badge">Your visits: <span id="visitCount">1</span></span>
   </div>
 </footer>
 
@@ -2099,7 +2420,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 <!-- ================= SCRIPTS ================= -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
@@ -2201,19 +2521,44 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =========================================================
-   LOADER
+   LOADER - ELECTRICAL BOLT CHARGING
 ========================================================= */
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
-  const percent = document.querySelector(".loader-percent");
+  const percent = document.getElementById("loaderPercent");
   const loaderBar = document.getElementById("loaderBar");
+  const boltFill = document.getElementById("boltFill");
+  const boltSparks = document.getElementById("boltSparks");
+  const boltFlash = document.getElementById("boltFlash");
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function spawnSpark(){
+    if (reduceMotion || !boltSparks) return;
+    const spark = document.createElement('span');
+    spark.className = 'bolt-spark';
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 30 + Math.random() * 30;
+    spark.style.setProperty('--sx', Math.cos(angle) * dist + 'px');
+    spark.style.setProperty('--sy', Math.sin(angle) * dist + 'px');
+    boltSparks.appendChild(spark);
+    setTimeout(() => spark.remove(), 650);
+  }
+
   let p = 0;
   const iv = setInterval(() => {
     p += Math.random() * 18;
     if (p >= 100) { p = 100; clearInterval(iv); }
     percent.textContent = Math.floor(p) + "%";
     loaderBar.style.width = p + "%";
+    if (boltFill) boltFill.style.clipPath = `inset(${100 - p}% 0 0 0)`;
+    spawnSpark();
   }, 120);
+
+  setTimeout(() => {
+    if (boltFlash) boltFlash.classList.add('active');
+    if (navigator.vibrate) navigator.vibrate([15, 30, 15]);
+  }, 1250);
+
   setTimeout(() => {
     loader.classList.add("hidden");
     document.body.style.overflow = "auto";
@@ -2453,23 +2798,27 @@ function updateActiveNav(){
    PARTICLES
 ========================================================= */
 if (window.particlesJS) {
-  particlesJS("particles-bg", {
-    particles: {
-      number: { value: 50, density: { enable: true, value_area: 800 } },
-      color: { value: ["#22C55E", "#4ADE80", "#86EFAC"] },
-      shape: { type: "circle" },
-      opacity: { value: 0.15, random: true },
-      size: { value: 2, random: true },
-      line_linked: { enable: true, distance: 120, color: "#22C55E", opacity: 0.04, width: 1 },
-      move: { enable: true, speed: 0.5, direction: "none", random: true, out_mode: "out" }
-    },
-    interactivity: {
-      detect_on: "canvas",
-      events: { onhover: { enable: true, mode: "grab" }, resize: true },
-      modes: { grab: { distance: 120, line_linked: { opacity: 0.08 } } }
-    },
-    retina_detect: true
-  });
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!(isMobile && reduceMotion)) {
+    particlesJS("particles-bg", {
+      particles: {
+        number: { value: isMobile ? 16 : 50, density: { enable: true, value_area: 800 } },
+        color: { value: ["#22C55E", "#4ADE80", "#86EFAC"] },
+        shape: { type: "circle" },
+        opacity: { value: 0.15, random: true },
+        size: { value: 2, random: true },
+        line_linked: { enable: !isMobile, distance: 120, color: "#22C55E", opacity: 0.04, width: 1 },
+        move: { enable: true, speed: isMobile ? 0.3 : 0.5, direction: "none", random: true, out_mode: "out" }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: { onhover: { enable: !isMobile, mode: "grab" }, resize: true },
+        modes: { grab: { distance: 120, line_linked: { opacity: 0.08 } } }
+      },
+      retina_detect: !isMobile
+    });
+  }
 }
 
 /* =========================================================
@@ -2788,9 +3137,157 @@ contactForm.addEventListener("submit", async (e) => {
 });
 
 /* =========================================================
+   NVQ PROGRESS
+========================================================= */
+(function(){
+  const fill = document.getElementById('nvqProgressFill');
+  const label = document.getElementById('nvqProgressLabel');
+  if (!fill || !label) return;
+  const start = new Date('2024-01-01').getTime();
+  const end = new Date('2027-12-31').getTime();
+  const now = Date.now();
+  let pct = ((now - start) / (end - start)) * 100;
+  pct = Math.max(0, Math.min(100, pct));
+  fill.style.width = pct.toFixed(0) + '%';
+  label.textContent = pct >= 100 ? 'Completed' : pct.toFixed(0) + '% through the program';
+})();
+
+/* =========================================================
+   STAR RATING BAR
+========================================================= */
+(function(){
+  const bar = document.getElementById('starRatingBar');
+  if (!bar) return;
+  const stars = bar.querySelectorAll('.star-rating-icon');
+  const hiddenInput = document.getElementById('fbRating');
+  const label = document.getElementById('starRatingLabel');
+  const labels = { 1: 'Poor', 2: 'Below Average', 3: 'Average', 4: 'Good', 5: 'Excellent' };
+
+  function paint(value){
+    stars.forEach(s => s.classList.toggle('active', Number(s.dataset.value) <= value));
+  }
+  function setValue(value){
+    hiddenInput.value = value;
+    paint(value);
+    label.textContent = labels[value] || 'Tap to rate';
+  }
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => setValue(Number(star.dataset.value)));
+    star.addEventListener('mouseenter', () => paint(Number(star.dataset.value)));
+    star.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setValue(Number(star.dataset.value)); }
+    });
+  });
+  bar.addEventListener('mouseleave', () => paint(Number(hiddenInput.value)));
+
+  setValue(5);
+})();
+
+/* =========================================================
+   FEEDBACK FORM
+========================================================= */
+const feedbackForm = document.getElementById("feedbackForm");
+if (feedbackForm) {
+  const fbSubmitBtn = document.getElementById("fbSubmitBtn");
+  const fbFormStatus = document.getElementById("fbFormStatus");
+  let fbLastSubmit = 0;
+
+  function showFbError(fieldId, message){
+    const input = document.getElementById(fieldId);
+    const group = input.closest(".form-group");
+    const errKey = "err-" + fieldId.replace("fb","fb").toLowerCase();
+    const errorEl = document.getElementById(errKey);
+    if (message){
+      group.classList.add("invalid");
+      if (errorEl) errorEl.textContent = message;
+    } else {
+      group.classList.remove("invalid");
+      if (errorEl) errorEl.textContent = "";
+    }
+  }
+
+  feedbackForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    fbFormStatus.textContent = "";
+    fbFormStatus.className = "form-status";
+
+    const name = document.getElementById("fbName").value.trim();
+    const rating = document.getElementById("fbRating").value;
+    const message = document.getElementById("fbMessage").value.trim();
+
+    let valid = true;
+    showFbError("fbName", name.length < 2 ? (valid = false, "Enter your name") : "");
+    showFbError("fbMessage", message.length < 5 ? (valid = false, "Please write your feedback") : "");
+    if (!valid) return;
+
+    const now = Date.now();
+    if (now - fbLastSubmit < SITE_CONFIG.FORM_COOLDOWN_SECONDS * 1000) {
+      fbFormStatus.textContent = "Please wait a few seconds.";
+      fbFormStatus.className = "form-status error";
+      return;
+    }
+
+    const configured = window.emailjs && !SITE_CONFIG.EMAILJS_PUBLIC_KEY.startsWith("YOUR_");
+    if (!configured) {
+      fbFormStatus.textContent = "Feedback form isn't connected yet.";
+      fbFormStatus.className = "form-status error";
+      return;
+    }
+
+    fbSubmitBtn.classList.add("loading");
+    fbSubmitBtn.disabled = true;
+
+    try {
+      await emailjs.send(SITE_CONFIG.EMAILJS_SERVICE_ID, SITE_CONFIG.EMAILJS_TEMPLATE_ID, {
+        from_name: name,
+        from_email: "no-reply@feedback.form",
+        reply_to: "no-reply@feedback.form",
+        phone: "",
+        message: "⭐".repeat(Number(rating)) + " Rating\n\n" + message,
+        to_name: "Tharindu Dilshan"
+      });
+      fbFormStatus.textContent = "✅ Thanks for your feedback!";
+      fbFormStatus.className = "form-status success";
+      feedbackForm.reset();
+      fbLastSubmit = now;
+    } catch (err) {
+      fbFormStatus.textContent = "❌ Something went wrong. Please try again.";
+      fbFormStatus.className = "form-status error";
+    } finally {
+      fbSubmitBtn.classList.remove("loading");
+      fbSubmitBtn.disabled = false;
+    }
+  });
+}
+
+/* =========================================================
+   VISIT COUNTER (device cookie based)
+========================================================= */
+(function(){
+  function getCookie(name){
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
+  function setCookie(name, value, days){
+    const d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = name + '=' + value + ';expires=' + d.toUTCString() + ';path=/';
+  }
+  let count = parseInt(getCookie('td_visit_count') || '0', 10);
+  count += 1;
+  setCookie('td_visit_count', count, 365);
+  const el = document.getElementById('visitCount');
+  if (el) el.textContent = count;
+})();
+
+/* =========================================================
    AOS + YEAR
 ========================================================= */
-if (window.AOS) AOS.init({ duration: 700, once: true, offset: 50, easing: "ease-out-cubic" });
+if (window.AOS) {
+  const isMobileAOS = window.matchMedia('(max-width: 768px)').matches;
+  AOS.init({ duration: isMobileAOS ? 450 : 700, once: true, offset: 50, easing: "ease-out-cubic" });
+}
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 </body>

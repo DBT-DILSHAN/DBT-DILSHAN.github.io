@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tharindu-dilshan-ai.github.io/sitemap.xml

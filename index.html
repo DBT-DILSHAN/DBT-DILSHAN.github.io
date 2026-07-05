@@ -1341,28 +1341,10 @@ input, textarea, select{ font-family:inherit; }
   -webkit-tap-highlight-color: transparent;
 }
 .project-card:hover{ transform: translateY(-8px); }
-.project-thumb {
-  height: 170px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.4rem;
+.project-thumb{
+  height:170px; display:flex; align-items:center; justify-content:center; font-size:2.4rem;
   background: linear-gradient(135deg, rgba(252,163,17,.04), rgba(252,163,17,.02));
-  position: relative;
-  overflow: hidden;
-}
-.project-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  transition: transform 0.5s ease;
-}
-.project-card:hover .project-thumb img {
-  transform: scale(1.08);
+  position:relative; overflow:hidden;
 }
 .project-thumb i { 
   background: var(--gold-gradient);
@@ -1370,15 +1352,26 @@ input, textarea, select{ font-family:inherit; }
   background-clip:text;
   color:transparent;
   animation: projectIconPulse 3s ease-in-out infinite;
-  z-index: 2; /* Keeps icon above image */
-  position: relative;
 }
 .project-card:hover .project-thumb i { animation-play-state: paused; transform: scale(1.15); }
 @keyframes projectIconPulse {
   0%, 100% { transform: scale(1) rotate(0deg); }
   50% { transform: scale(1.1) rotate(10deg); }
 }
-.project-thumb::before, .project-thumb::after { content: none; } /* Hide background patterns if image is present */
+.project-thumb::before{
+  content: "✦"; position: absolute; font-size: 4rem; opacity: 0.03;
+  animation: pulseIcon 3s ease-in-out infinite;
+}
+@keyframes pulseIcon{
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.03; }
+  50% { transform: scale(1.3) rotate(180deg); opacity: 0.06; }
+}
+.project-thumb::after{
+  content:""; position:absolute; inset:0;
+  background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:20px 20px;
+}
 .project-body{ padding:18px 20px; position:relative; z-index:2; }
 .project-body h3{ font-family: var(--font-display); font-size:1.05rem; margin-bottom:4px; }
 .project-body p{ color: var(--text-dim); font-size:.85rem; margin-bottom:12px; }
@@ -1405,6 +1398,8 @@ input, textarea, select{ font-family:inherit; }
 .modal-overlay.active .modal-box{ transform: scale(1); }
 .modal-close, .lightbox-close{ position:absolute; top:14px; right:14px; font-size:1.2rem; color: var(--text-dim); transition:.3s; cursor:pointer; background:none; border:none; }
 .modal-close:hover, .lightbox-close:hover{ color: var(--gold); transform: rotate(90deg); }
+.modal-image{ width:100%; height:240px; object-fit:cover; border-radius:12px; margin-bottom:20px; }
+.modal-icon{ display:flex; align-items:center; justify-content:center; min-height:60px; margin-bottom:16px; }
 .modal-icon{ font-size:2.4rem; background: var(--gold-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:14px; }
 .modal-box h3{ font-family: var(--font-display); font-size:1.4rem; margin-bottom:10px; }
 .modal-box p{ color: var(--text-dim); margin-bottom:14px; }
@@ -2438,54 +2433,12 @@ const SKILLS = [
 ];
 
 const PROJECTS = [
-  { 
-    title: "Schneider Altivar VFD Commissioning", 
-    desc: "Parameterized and commissioned Altivar-series VFDs in an industrial automation setup.", 
-    tags: ["VFD", "Automation"], 
-    filter: "vfd", 
-    icon: "fa-bolt",
-    image: "https://images.unsplash.com/photo-1620626012595-67517a82ddb9?w=500&q=80" 
-  },
-  { 
-    title: "Motor Rewiring & Alignment Support", 
-    desc: "Supported motor rewiring and coupling alignment with precision tools and safety protocols.", 
-    tags: ["Motor Control", "Field Work"], 
-    filter: "motor", 
-    icon: "fa-industry",
-    image: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=500&q=80" 
-  },
-  { 
-    title: "Distribution Panel Overhaul", 
-    desc: "Rewired and relabeled an aging distribution panel for improved safety and power routing.", 
-    tags: ["Panel Boards", "Safety"], 
-    filter: "panel", 
-    icon: "fa-server",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?w=500&q=80" 
-  },
-  { 
-    title: "Control Panel Wiring Build", 
-    desc: "Built and wired a control panel from schematic, organizing complex wire routing effectively.", 
-    tags: ["Panel Boards", "Wiring"], 
-    filter: "panel", 
-    icon: "fa-diagram-project",
-    image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=500&q=80" 
-  },
-  { 
-    title: "High-Performance Motor Analysis", 
-    desc: "Used diagnostic meters and vibration analysis tools to assess industrial motor health.", 
-    tags: ["Motor Control", "Troubleshooting"], 
-    filter: "motor", 
-    icon: "fa-magnifying-glass-chart",
-    image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=500&q=80" 
-  },
-  { 
-    title: "VFD Fault Diagnostics", 
-    desc: "Diagnosed and resolved recurring drive faults through systematic troubleshooting.", 
-    tags: ["VFD", "Troubleshooting"], 
-    filter: "vfd", 
-    icon: "fa-magnifying-glass-chart",
-    image: "https://images.unsplash.com/photo-1503708928676-1cb796a0891e?w=500&q=80" 
-  }
+  { title: "Distribution Panel Overhaul", desc: "Rewired and relabeled an aging distribution panel.", tags: ["Panel Boards", "Safety"], filter: "panel", icon: "fa-server", image: "assets/images/projects/Distribution_Panel_Overhaul.jpg" },
+  { title: "Motor Control Center Maintenance", desc: "Routine and corrective maintenance on MCC units.", tags: ["Motor Control", "Maintenance"], filter: "motor", icon: "fa-gears", image: "assets/images/projects/Motor_Control_Center_Maintenance.jpg" },
+  { title: "Schneider Altivar VFD Commissioning", desc: "Parameterized and commissioned Altivar-series VFDs.", tags: ["VFD", "Automation"], filter: "vfd", icon: "fa-bolt", image: "assets/images/projects/Schneider_Altivar_VFD_Commissioning.jpg" },
+  { title: "Control Panel Wiring Build", desc: "Built and wired a control panel from schematic.", tags: ["Panel Boards", "Wiring"], filter: "panel", icon: "fa-diagram-project", image: "assets/images/projects/Control_Panel_Wiring_Build.jpg" },
+  { title: "VFD Fault Diagnostics", desc: "Diagnosed and resolved recurring drive faults.", tags: ["VFD", "Troubleshooting"], filter: "vfd", icon: "fa-magnifying-glass-chart", image: "assets/images/projects/VFD_Fault_Diagnostics.jpg" },
+  { title: "Motor Rewiring & Alignment Support", desc: "Supported motor rewiring and coupling alignment.", tags: ["Motor Control", "Field Work"], filter: "motor", icon: "fa-industry", image: "assets/images/projects/Motor_Rewiring_Alignment_Support.jpg" }
 ];
 
 const CERTS = [
@@ -3007,17 +2960,10 @@ function renderProjects(filter = "all"){
     card.className = "project-card glass-card";
     card.setAttribute("data-aos", "zoom-in");
     card.setAttribute("data-aos-delay", (i%3)*80);
-    card.innerHTML = `
-      <div class="project-thumb">
-        <img src="${p.image}" alt="${p.title}" loading="lazy">
-        <i class="fa-solid ${p.icon}"></i>
-      </div>
-      <div class="project-body">
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-        <div class="project-tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div>
-      </div>
-    `;
+    const thumbContent = p.image 
+      ? `<img src="${p.image}" alt="${p.title}" style="width:100%;height:100%;object-fit:cover;opacity:0.9;">` 
+      : `<i class="fa-solid ${p.icon}"></i>`;
+    card.innerHTML = `<div class="project-thumb">${thumbContent}</div><div class="project-body"><h3>${p.title}</h3><p>${p.desc}</p><div class="project-tags">${p.tags.map(t => `<span>${t}</span>`).join("")}</div></div>`;
     card.addEventListener("click", () => openModal(p));
     projectsGrid.appendChild(card);
   });
@@ -3035,6 +2981,22 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
 
 const projectModal = document.getElementById("projectModal");
 function openModal(p){
+  const modalBox = document.querySelector(".modal-box");
+  const iconDiv = document.querySelector(".modal-icon");
+  
+  // Remove existing image if any
+  const existingImg = modalBox.querySelector(".modal-image");
+  if (existingImg) existingImg.remove();
+  
+  // Add image or icon
+  if (p.image) {
+    const img = document.createElement("img");
+    img.src = p.image;
+    img.alt = p.title;
+    img.className = "modal-image";
+    modalBox.insertBefore(img, iconDiv);
+  }
+  
   document.getElementById("modalTitle").textContent = p.title;
   document.getElementById("modalDesc").textContent = p.desc;
   document.getElementById("modalTags").innerHTML = p.tags.map(t => `<span>${t}</span>`).join("");

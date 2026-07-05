@@ -79,6 +79,13 @@
   --gold-dark: #059669;
   --gold-glow: rgba(16, 185, 129, 0.10);
   --gold-gradient: linear-gradient(135deg, #10B981 0%, #34D399 50%, #6EE7B7 100%);
+  
+  /* Additional Color Palette */
+  --blue-accent: #3B82F6;
+  --purple-accent: #A855F7;
+  --cyan-accent: #06B6D4;
+  --rose-accent: #F43F5E;
+  
   --navy: #0a0a0a;
   --black: #000000;
   --white: #FFFFFF;
@@ -118,6 +125,13 @@
   --gold-dark: #15803D;
   --gold-glow: rgba(34, 197, 94, 0.15);
   --gold-gradient: linear-gradient(135deg, #22C55E 0%, #4ADE80 50%, #86EFAC 100%);
+  
+  /* Additional Color Palette */
+  --blue-accent: #3B82F6;
+  --purple-accent: #A855F7;
+  --cyan-accent: #06B6D4;
+  --rose-accent: #F43F5E;
+  
   --navy: #0a0a0a;
   --black: #000000;
   --white: #FFFFFF;
@@ -887,6 +901,143 @@ input, textarea, select{ font-family:inherit; }
 @keyframes rippleAnim{ to{ transform:scale(3); opacity:0; } }
 
 /* =========================================================
+   ENHANCED BUTTON GLOW EFFECTS
+========================================================= */
+.btn {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--gold-gradient);
+  opacity: 0;
+  z-index: -1;
+  filter: blur(20px);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.btn-primary::after {
+  background: var(--gold-gradient);
+}
+
+.btn-primary:hover::after {
+  opacity: 0.4;
+  filter: blur(24px);
+}
+
+.btn-outline::after {
+  background: linear-gradient(135deg, rgba(16,185,129,0.6) 0%, rgba(52,211,153,0.6) 100%);
+}
+
+.btn-outline:hover::after {
+  opacity: 0.3;
+  filter: blur(16px);
+}
+
+/* Additional glow on active state */
+.btn:active {
+  transform: translateY(2px) scale(0.98) !important;
+}
+
+.btn:active::after {
+  opacity: 0.5 !important;
+}
+
+/* Smooth transition animations */
+.btn {
+  transition: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.45s ease,
+              border-color 0.45s ease;
+}
+
+/* Hover animation with subtle scale and lift */
+.btn:hover {
+  animation: buttonBreathe 1s ease-in-out infinite;
+}
+
+@keyframes buttonBreathe {
+  0%, 100% { transform: translateY(-4px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* =========================================================
+   GLOBAL ANIMATIONS & SMOOTH TRANSITIONS
+========================================================= */
+* {
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth hover effects on interactive elements */
+a, button, input[type="button"], input[type="submit"], .clickable {
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Fade in animation for elements */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Gentle float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glow pulse animation */
+@keyframes glowPulse {
+  0%, 100% { 
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+  }
+  50% { 
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+  }
+}
+
+/* =========================================================
    HERO
 ========================================================= */
 .hero{
@@ -1175,6 +1326,179 @@ input, textarea, select{ font-family:inherit; }
 }
 
 /* =========================================================
+   ABOUT POPUP - GLASS EFFECT
+========================================================= */
+.about-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 20px;
+}
+
+.about-popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.about-popup-box {
+  background: var(--glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  transform: scale(0.85) translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease;
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.4),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 40px rgba(16, 185, 129, 0.06),
+    0 0 40px rgba(16, 185, 129, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-popup-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(110deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.15), 
+    transparent);
+  pointer-events: none;
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.about-popup-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(16, 185, 129, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-popup-overlay.active .about-popup-box {
+  transform: scale(1) translateY(0);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.5),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 40px rgba(16, 185, 129, 0.08),
+    0 0 60px rgba(16, 185, 129, 0.2);
+}
+
+.about-popup-overlay.active .about-popup-box::before {
+  animation: aboutSheen 1.2s ease-out 0.15s;
+}
+
+@keyframes aboutSheen {
+  to { left: 150%; }
+}
+
+.about-popup-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+}
+
+.about-popup-box i {
+  font-size: 3rem;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  z-index: 2;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+}
+
+.about-popup-box p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  position: relative;
+  z-index: 2;
+  margin: 20px 0;
+}
+
+.about-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--text-dim);
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 3;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.about-popup-close:hover {
+  color: var(--gold);
+  background: rgba(16, 185, 129, 0.2);
+  border-color: var(--gold);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Make about cards clickable */
+.about-popup-trigger {
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.about-popup-trigger:hover {
+  transform: translateY(-8px);
+  border-color: var(--gold);
+  box-shadow: 
+    0 20px 60px rgba(16, 185, 129, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 0 40px rgba(16, 185, 129, 0.04);
+}
+
+/* =========================================================
    SKILLS
 ========================================================= */
 .skills-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap:16px; max-width:1200px; margin:0 auto; }
@@ -1257,68 +1581,128 @@ input, textarea, select{ font-family:inherit; }
   position: fixed;
   inset: 0;
   z-index: 3000;
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 20px;
 }
+
 .service-modal-overlay.active {
   opacity: 1;
   visibility: visible;
 }
+
 .service-modal-box {
-  background: var(--surface);
+  background: var(--glass);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius);
-  padding: 40px 36px;
-  max-width: 400px;
+  border: 1.5px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 420px;
   width: 90%;
   text-align: center;
-  transform: scale(0.9);
-  transition: transform 0.3s var(--ease);
-  box-shadow: 0 20px 60px var(--shadow-strong);
+  transform: scale(0.85) translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease;
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.4),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 40px rgba(16, 185, 129, 0.06),
+    0 0 40px rgba(16, 185, 129, 0.15);
   position: relative;
+  overflow: hidden;
 }
+
+.service-modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(110deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.15), 
+    transparent);
+  pointer-events: none;
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.service-modal-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(16, 185, 129, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
 .service-modal-overlay.active .service-modal-box {
-  transform: scale(1);
+  transform: scale(1) translateY(0);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.5),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 40px rgba(16, 185, 129, 0.08),
+    0 0 60px rgba(16, 185, 129, 0.2);
 }
+
+.service-modal-overlay.active .service-modal-box::before {
+  animation: serviceSheen 1.2s ease-out 0.15s;
+}
+
+@keyframes serviceSheen {
+  to { left: 150%; }
+}
+
 .service-modal-box i {
-  font-size: 2.8rem;
+  font-size: 3.2rem;
   background: var(--gold-gradient);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  margin-bottom: 12px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
 }
+
 .service-modal-box h3 {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  margin-bottom: 8px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
 .service-modal-box p {
   color: var(--text-dim);
   font-size: 0.95rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 2;
 }
+
 .service-modal-close {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 1.2rem;
-  color: var(--text-dim);
-  transition: 0.3s;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-.service-modal-close:hover {
-  color: var(--gold);
-  transform: rotate(90deg);
+  display: none;
 }
 
 /* =========================================================
@@ -1382,26 +1766,150 @@ input, textarea, select{ font-family:inherit; }
    MODAL
 ========================================================= */
 .modal-overlay, .lightbox-overlay{
-  position:fixed; inset:0; z-index:2000; background: rgba(0,0,0,.5); backdrop-filter: blur(12px);
-  display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:.35s;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  padding: 20px;
 }
-.modal-overlay.active, .lightbox-overlay.active{ opacity:1; visibility:visible; }
+
+.modal-overlay.active, .lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .modal-box{
-  background: var(--surface);
+  background: var(--glass);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border:1px solid var(--glass-border);
-  border-radius: var(--radius); padding:36px;
-  max-width:480px; width:90%; position:relative; transform: scale(.9); transition:.35s var(--ease);
-  box-shadow: 0 20px 60px var(--shadow-strong);
+  border: 1.5px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 480px;
+  width: 90%;
+  position: relative;
+  overflow: hidden;
+  transform: scale(0.85) translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease;
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.4),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 40px rgba(16, 185, 129, 0.06),
+    0 0 40px rgba(16, 185, 129, 0.15);
 }
-.modal-overlay.active .modal-box{ transform: scale(1); }
-.modal-close, .lightbox-close{ position:absolute; top:14px; right:14px; font-size:1.2rem; color: var(--text-dim); transition:.3s; cursor:pointer; background:none; border:none; }
-.modal-close:hover, .lightbox-close:hover{ color: var(--gold); transform: rotate(90deg); }
-.modal-icon{ font-size:2.4rem; background: var(--gold-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:14px; }
-.modal-box h3{ font-family: var(--font-display); font-size:1.4rem; margin-bottom:10px; }
-.modal-box p{ color: var(--text-dim); margin-bottom:14px; }
-.modal-tags span{ font-family: var(--font-mono); font-size:.65rem; padding:5px 12px; border-radius:99px; border:1px solid var(--glass-border); margin-right:6px; background: var(--gold-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(110deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.15), 
+    transparent);
+  pointer-events: none;
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.modal-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(16, 185, 129, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.modal-overlay.active .modal-box {
+  transform: scale(1) translateY(0);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.5),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 40px rgba(16, 185, 129, 0.08),
+    0 0 60px rgba(16, 185, 129, 0.2);
+}
+
+.modal-overlay.active .modal-box::before {
+  animation: modalSheen 1.2s ease-out 0.15s;
+}
+
+@keyframes modalSheen {
+  to { left: 150%; }
+}
+
+.modal-close {
+  display: none;
+}
+.modal-icon {
+  font-size: 3.2rem;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+}
+
+.modal-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-box p {
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+  line-height: 1.6;
+}
+
+.modal-tags {
+  position: relative;
+  z-index: 2;
+}
+
+.modal-tags span {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 6px 12px;
+  border-radius: 99px;
+  border: 1px solid var(--glass-border);
+  margin-right: 6px;
+  margin-bottom: 6px;
+  display: inline-block;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 /* =========================================================
    TIMELINE
@@ -1467,22 +1975,105 @@ input, textarea, select{ font-family:inherit; }
 }
 .cert-card:hover .cert-overlay{ opacity:1; }
 .lightbox-content{ 
-  max-width:600px; width:90%; 
-  background: var(--surface);
+  max-width: 600px;
+  width: 90%;
+  background: var(--glass);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border:1px solid var(--glass-border);
-  border-radius: var(--radius); padding:50px; text-align:center; 
-  box-shadow: 0 0 0 1px rgba(16,185,129,.08), 0 20px 60px var(--shadow-strong), 0 0 50px var(--gold-glow);
-  position:relative; overflow:hidden;
+  border: 1.5px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transform: scale(0.85) translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease;
+  box-shadow:
+    0 20px 80px rgba(0, 0, 0, 0.4),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 40px rgba(16, 185, 129, 0.06),
+    0 0 40px rgba(16, 185, 129, 0.15);
 }
+
+.lightbox-overlay.active .lightbox-content {
+  transform: scale(1) translateY(0);
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.5),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.15),
+    inset 0 0 40px rgba(16, 185, 129, 0.08),
+    0 0 60px rgba(16, 185, 129, 0.2);
+}
+
 .lightbox-content::before{
-  content:''; position:absolute; inset:0; pointer-events:none;
-  background: linear-gradient(135deg, rgba(16,185,129,.06) 0%, transparent 40%, transparent 60%, rgba(16,185,129,.05) 100%);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(110deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.15), 
+    transparent);
+  pointer-events: none;
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
 }
-.lightbox-content i{ font-size:3rem; background: var(--gold-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:16px; }
-.lightbox-content h3{ font-family: var(--font-display); margin-bottom:10px; position:relative; z-index:2; }
-.lightbox-content p{ color: var(--text-dim); position:relative; z-index:2; }
+
+.lightbox-overlay.active .lightbox-content::before {
+  animation: lightboxSheen 1.2s ease-out 0.15s;
+}
+
+@keyframes lightboxSheen {
+  to { left: 150%; }
+}
+
+.lightbox-content::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(16, 185, 129, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+.lightbox-content i {
+  font-size: 3.2rem;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+  display: block;
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.3));
+}
+
+.lightbox-content h3 {
+  font-family: var(--font-display);
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lightbox-content p {
+  color: var(--text-dim);
+  position: relative;
+  z-index: 2;
+  line-height: 1.6;
+}
 .lock-badge{
   width:92px; height:92px; margin:0 auto 22px; border-radius:50%;
   display:flex; align-items:center; justify-content:center; position:relative; z-index:2;
@@ -1827,18 +2418,38 @@ input, textarea, select{ font-family:inherit; }
   .services-grid{ grid-template-columns: repeat(3, 1fr); }
   .projects-grid{ grid-template-columns: repeat(2, 1fr); }
   .cert-gallery{ grid-template-columns: repeat(3, 1fr); }
+
+  /* 9 nav links can't fit in one row on tablets — switch to the slide-out
+     hamburger menu here instead of waiting until 768px, so iPads and small
+     laptops don't get a squeezed/overflowing navbar. */
+  .nav-links{
+    position:fixed; top:0; right:0; height:100vh; width:min(80%, 320px);
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    flex-direction:column; justify-content:center; gap:4px;
+    padding: 40px; transform: translateX(100%); transition: transform .4s var(--ease);
+    border-left:1px solid var(--glass-border);
+    z-index: 900;
+    overflow-y: auto;
+  }
+  [data-theme="dark"] .nav-links { background: rgba(0, 0, 0, 0.92); }
+  [data-theme="light"] .nav-links { background: rgba(255, 255, 255, 0.92); }
+  .nav-links.open{ transform: translateX(0); }
+  .nav-link{ font-size: .95rem; padding: 10px 0; }
+  .nav-link::before{ display:inline; }
+  .nav-actions .nav-cta{ display:none; }
+  .nav-toggle{ display:flex; }
+  .nav-close{ display:block; }
 }
 
-/* Compact nav for laptop widths so 10 nav links don't crowd the bar */
-@media (max-width: 1200px) and (min-width: 769px) {
+/* Compact nav for laptop widths so 9 nav links don't crowd the bar
+   (only relevant above the hamburger breakpoint, see 1024px query below) */
+@media (max-width: 1200px) and (min-width: 1025px) {
   .nav-link{ padding: 8px 8px; font-size: .68rem; }
   .nav-link::before{ display:none; }
   .nav-logo{ font-size: 1.35rem; }
   .nav-cta{ padding: 7px 12px; font-size: .65rem; }
-}
-@media (max-width: 980px) and (min-width: 769px) {
-  .nav-link{ padding: 6px 6px; font-size: .62rem; }
-  .navbar{ padding: 14px 3%; }
 }
 
 /* Large / ultra-wide desktop refinements */
@@ -1872,23 +2483,12 @@ input, textarea, select{ font-family:inherit; }
   .hero-role{ font-size: .9rem; }
   .section{ padding:60px 4%; }
   .section-title{ font-size: clamp(1.6rem, 5vw, 2.2rem); }
-  
-  .nav-links{
-    position:fixed; top:0; right:0; height:100vh; width:80%; max-width:320px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    flex-direction:column; justify-content:center; gap:4px;
-    padding: 40px; transform: translateX(100%); transition: transform .4s var(--ease); 
-    border-left:1px solid var(--glass-border);
-  }
-  [data-theme="dark"] .nav-links { background: rgba(0, 0, 0, 0.92); }
-  [data-theme="light"] .nav-links { background: rgba(255, 255, 255, 0.92); }
-  .nav-links.open{ transform: translateX(0); }
-  .nav-actions .nav-cta{ display:none; }
-  .nav-toggle{ display:flex; }
-  .nav-close{ display:block; }
-  
+
+  /* Nav hamburger already activates at the 1024px breakpoint above;
+     only phone-specific tweaks to that same panel live here. */
+  .nav-links{ padding: 32px 28px; }
+  .nav-link{ font-size: .82rem; padding: 9px 0; }
+
   .about-grid{ grid-template-columns:1fr; gap:30px; }
   .about-cols{ grid-template-columns:1fr; gap:12px; }
   .blueprint-card{ max-width:250px; margin:0 auto; aspect-ratio: 3/4; }
@@ -1953,6 +2553,8 @@ input, textarea, select{ font-family:inherit; }
 @media (max-height: 480px) and (orientation: landscape) {
   .hero{ min-height: auto; padding: 100px 5% 40px; }
   .scroll-cue{ display:none; }
+  .nav-links{ padding: 70px 24px 24px; gap: 0; justify-content:flex-start; }
+  .nav-link{ padding: 6px 0; font-size: .78rem; }
 }
 
 /* Ensure tap targets stay comfortable on touch screens */
@@ -2117,10 +2719,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     <div class="about-content" data-aos="fade-left" data-aos-duration="800">
       <p class="lead">I'm an electrician from Mahagama, Sri Lanka, currently completing my <strong>NVQ Level 4 in Power Electrical (Special)</strong> at the Industry Engineering Training Institute (IETI), Moratuwa. I work daily in the Electrical &amp; Maintenance Department, getting real hands-on time with panel boards, motor control centers and variable frequency drive systems.</p>
       <div class="about-cols">
-        <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="100"><h4><i class="fa-solid fa-bullseye"></i> Mission</h4><p>Deliver electrical work that is safe, precise and built to last.</p></div>
-        <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="200"><h4><i class="fa-solid fa-eye"></i> Vision</h4><p>Grow from field electrician into industrial automation.</p></div>
-        <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="300"><h4><i class="fa-solid fa-shield-halved"></i> Safety-First</h4><p>Every task starts with isolation, testing and procedure.</p></div>
-        <div class="about-col glass-card" data-aos="fade-up" data-aos-delay="400"><h4><i class="fa-solid fa-arrows-spin"></i> Continuous Learning</h4><p>Formal NVQ training paired with on-the-job experience.</p></div>
+        <div class="about-col glass-card about-popup-trigger" data-title="Mission" data-icon="fa-bullseye" data-aos="fade-up" data-aos-delay="100"><h4><i class="fa-solid fa-bullseye"></i> Mission</h4><p>Deliver electrical work that is safe, precise and built to last.</p></div>
+        <div class="about-col glass-card about-popup-trigger" data-title="Vision" data-icon="fa-eye" data-aos="fade-up" data-aos-delay="200"><h4><i class="fa-solid fa-eye"></i> Vision</h4><p>Grow from field electrician into industrial automation.</p></div>
+        <div class="about-col glass-card about-popup-trigger" data-title="Safety-First" data-icon="fa-shield-halved" data-aos="fade-up" data-aos-delay="300"><h4><i class="fa-solid fa-shield-halved"></i> Safety-First</h4><p>Every task starts with isolation, testing and procedure.</p></div>
+        <div class="about-col glass-card about-popup-trigger" data-title="Continuous Learning" data-icon="fa-arrows-spin" data-aos="fade-up" data-aos-delay="400"><h4><i class="fa-solid fa-arrows-spin"></i> Continuous Learning</h4><p>Formal NVQ training paired with on-the-job experience.</p></div>
       </div>
     </div>
   </div>
@@ -2160,6 +2762,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   </div>
 </div>
 
+<!-- About Popup -->
+<div class="about-popup-overlay" id="aboutPopup">
+  <div class="about-popup-box">
+    <i id="aboutPopupIcon"></i>
+    <h3 id="aboutPopupTitle"></h3>
+    <p id="aboutPopupText"></p>
+  </div>
+</div>
+
 <!-- ================= SERVICES ================= -->
 <section id="services" class="section">
   <div class="section-head" data-aos="fade-up">
@@ -2174,7 +2785,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 <!-- Service Modal -->
 <div class="service-modal-overlay" id="serviceModal">
   <div class="service-modal-box">
-    <button class="service-modal-close" id="serviceModalClose"><i class="fa-solid fa-xmark"></i></button>
     <i class="fa-solid fa-industry" id="serviceModalIcon"></i>
     <h3 id="serviceModalTitle"></h3>
     <p id="serviceModalDesc"></p>
@@ -2199,7 +2809,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 <!-- Modal -->
 <div class="modal-overlay" id="projectModal">
   <div class="modal-box">
-    <button class="modal-close" id="modalClose" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
     <div class="modal-icon"><i class="fa-solid fa-bolt"></i></div>
     <h3 id="modalTitle"></h3>
     <p id="modalDesc"></p>
@@ -2314,7 +2923,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 <!-- Lightbox -->
 <div class="lightbox-overlay" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close lightbox"><i class="fa-solid fa-xmark"></i></button>
   <div class="lightbox-content" id="lightboxContent"></div>
 </div>
 
@@ -2924,7 +3532,6 @@ skillObserver.observe(skillsGrid);
 ========================================================= */
 const servicesGrid = document.getElementById('servicesGrid');
 const serviceModal = document.getElementById('serviceModal');
-const serviceModalClose = document.getElementById('serviceModalClose');
 
 SERVICES.forEach((service, index) => {
   const card = document.createElement('div');
@@ -2938,14 +3545,29 @@ SERVICES.forEach((service, index) => {
     document.getElementById('serviceModalTitle').textContent = service.title;
     document.getElementById('serviceModalDesc').textContent = service.desc;
     serviceModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
     if (navigator.vibrate) navigator.vibrate(25);
   });
   
   servicesGrid.appendChild(card);
 });
 
-serviceModalClose.addEventListener('click', () => serviceModal.classList.remove('active'));
-serviceModal.addEventListener('click', (e) => { if (e.target === serviceModal) serviceModal.classList.remove('active'); });
+// Close service modal handlers
+function closeServiceModal() {
+  serviceModal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+serviceModal.addEventListener('click', (e) => { 
+  if (e.target === serviceModal) closeServiceModal(); 
+});
+
+// Close on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && serviceModal.classList.contains('active')) {
+    closeServiceModal();
+  }
+});
 
 /* =========================================================
    RENDER PROJECTS
@@ -2975,14 +3597,30 @@ document.querySelectorAll(".filter-btn").forEach(btn => {
 });
 
 const projectModal = document.getElementById("projectModal");
+
 function openModal(p){
   document.getElementById("modalTitle").textContent = p.title;
   document.getElementById("modalDesc").textContent = p.desc;
   document.getElementById("modalTags").innerHTML = p.tags.map(t => `<span>${t}</span>`).join("");
   projectModal.classList.add("active");
+  document.body.style.overflow = 'hidden';
 }
-document.getElementById("modalClose").addEventListener("click", () => projectModal.classList.remove("active"));
-projectModal.addEventListener("click", (e) => { if (e.target === projectModal) projectModal.classList.remove("active"); });
+
+function closeModal() {
+  projectModal.classList.remove("active");
+  document.body.style.overflow = '';
+}
+
+projectModal.addEventListener("click", (e) => { 
+  if (e.target === projectModal) closeModal(); 
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+    closeModal();
+  }
+});
 
 /* =========================================================
    RENDER CERTIFICATES
@@ -3007,15 +3645,32 @@ document.querySelectorAll('.timeline-card').forEach(card => {
     const icon = card.getAttribute('data-icon') || 'fa-briefcase';
     document.getElementById("lightboxContent").innerHTML = `<div class="lock-badge"><i class="fa-solid ${icon}"></i></div><h3>${title}</h3><p class="timeline-org" style="margin-bottom:10px;">${org}</p><p>${desc}</p>`;
     lightbox.classList.add("active");
+    document.body.style.overflow = 'hidden';
     if (navigator.vibrate) navigator.vibrate(20);
   });
 });
+
 function openLightbox(c){
   document.getElementById("lightboxContent").innerHTML = `<div class="lock-badge"><i class="fa-solid fa-lock-open"></i></div><h3>${c.title}</h3><p>${c.org}</p><span class="verified-tag"><i class="fa-solid fa-shield-halved"></i>VERIFIED CREDENTIAL</span>`;
   lightbox.classList.add("active");
+  document.body.style.overflow = 'hidden';
 }
-document.getElementById("lightboxClose").addEventListener("click", () => lightbox.classList.remove("active"));
-lightbox.addEventListener("click", (e) => { if (e.target === lightbox) lightbox.classList.remove("active"); });
+
+function closeLightbox() {
+  lightbox.classList.remove("active");
+  document.body.style.overflow = '';
+}
+
+lightbox.addEventListener("click", (e) => { 
+  if (e.target === lightbox) closeLightbox(); 
+});
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+    closeLightbox();
+  }
+});
 
 /* =========================================================
    MAGNETIC BUTTONS
@@ -3264,6 +3919,87 @@ if (feedbackForm) {
   setCookie('td_visit_count', count, 365);
   const el = document.getElementById('visitCount');
   if (el) el.textContent = count;
+})();
+
+/* =========================================================
+   ABOUT POPUP - TOUCH & CLICK HANDLERS
+========================================================= */
+(function(){
+  const aboutPopup = document.getElementById('aboutPopup');
+  const aboutPopupBox = document.querySelector('.about-popup-box');
+  const aboutTriggers = document.querySelectorAll('.about-popup-trigger');
+  
+  // About section content
+  const aboutData = {
+    'Mission': {
+      icon: 'fa-bullseye',
+      text: 'Deliver electrical work that is safe, precise and built to last. Every installation reflects my commitment to quality and reliability.'
+    },
+    'Vision': {
+      icon: 'fa-eye',
+      text: 'Grow from field electrician into industrial automation. I\'m building expertise in modern automation systems and advanced electrical control technologies.'
+    },
+    'Safety-First': {
+      icon: 'fa-shield-halved',
+      text: 'Every task starts with isolation, testing and procedure. Safety isn\'t negotiable — it\'s the foundation of professional electrical work.'
+    },
+    'Continuous Learning': {
+      icon: 'fa-arrows-spin',
+      text: 'Formal NVQ training paired with on-the-job experience. I\'m committed to staying current with industry standards and emerging technologies.'
+    }
+  };
+  
+  // Open popup
+  function openAboutPopup(title) {
+    const data = aboutData[title];
+    if (!data) return;
+    
+    const titleEl = document.getElementById('aboutPopupTitle');
+    const textEl = document.getElementById('aboutPopupText');
+    const iconEl = document.getElementById('aboutPopupIcon');
+    
+    titleEl.textContent = title;
+    textEl.textContent = data.text;
+    iconEl.className = 'fa-solid ' + data.icon;
+    
+    aboutPopup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  // Close popup
+  function closeAboutPopup() {
+    aboutPopup.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  // Event listeners - touch and click
+  aboutTriggers.forEach(trigger => {
+    trigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      const title = this.getAttribute('data-title');
+      openAboutPopup(title);
+    });
+    
+    trigger.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      const title = this.getAttribute('data-title');
+      openAboutPopup(title);
+    });
+  });
+  
+  // Close on overlay click
+  aboutPopup.addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeAboutPopup();
+    }
+  });
+  
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && aboutPopup.classList.contains('active')) {
+      closeAboutPopup();
+    }
+  });
 })();
 
 /* =========================================================

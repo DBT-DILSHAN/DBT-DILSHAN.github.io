@@ -2262,6 +2262,37 @@ input, textarea, select{ font-family:inherit; }
   }
   
   body { font-size: .95rem; line-height: 1.6; }
+
+  /* Video Background */
+  #videoBg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.35;
+  }
+
+  #videoBgOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+      rgba(0, 0, 0, 0.65) 0%, 
+      rgba(0, 20, 10, 0.55) 50%, 
+      rgba(0, 0, 0, 0.70) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  body > main, body > header, body > footer {
+    position: relative;
+    z-index: 2;
+  }
   
   .hero { padding-top: 75px; padding-bottom: 25px; }
   .hero-title{ font-size: clamp(1.8rem, 10vw, 2.5rem); line-height: 1.2; }
@@ -2541,6 +2572,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 </script>
 </head>
 <body>
+<!-- ================= VIDEO BACKGROUND ================= -->
+<video id="videoBg" autoplay muted loop playsinline>
+  <source src="bg-video.mp4" type="video/mp4">
+</video>
+<div id="videoBgOverlay"></div>
+
 <!-- ================= APPLE LIQUID GLASS DISTORTION FILTER ================= -->
 <svg width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;" aria-hidden="true">
   <defs>
